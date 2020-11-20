@@ -12,6 +12,8 @@ class NewsSpider(scrapy.Spider):
         contents = remove_tags(response.xpath("//div[@class='content']").get()) #getting the contents
         date = response.xpath("//span[@class='date date-published']/text()").get() #getting the publish date
         label = response.xpath("//h5[contains(@class,'rating-label')]/text()").get() #getting the label
+        author = response.xpath("//a[@class='author']/text()").get() #getting the author
+        claim = response.xpath("//div[@class='claim']/p/text()").get() #getting the claim
 
 
         yield {
@@ -19,5 +21,7 @@ class NewsSpider(scrapy.Spider):
             'url' : url,
             'contents' : contents,
             'date' : date,
-            'label' : label
+            'label' : label,
+            'author' : author,
+            'claim' : claim
         }
