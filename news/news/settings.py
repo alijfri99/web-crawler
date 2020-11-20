@@ -19,6 +19,9 @@ NEWSPIDER_MODULE = 'news.spiders'
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = True
 
+#Save the JSON file in utf-8 encoding
+FEED_EXPORT_ENCODING = 'utf-8'
+
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
 #CONCURRENT_REQUESTS = 32
 
