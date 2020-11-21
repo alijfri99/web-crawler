@@ -5,7 +5,6 @@ import re
 
 class NewsSpider(scrapy.Spider):
     name = "snopes_crawler"
-    allowed_domains = ["snopes.com/fact-check"]
     start_urls = ["https://www.snopes.com/fact-check/"]
     visited_urls = []
 
@@ -13,12 +12,11 @@ class NewsSpider(scrapy.Spider):
         title = response.xpath("//h1/text()").get()  # getting the title
         url = response.url  # getting the url
 
-        #getting the content
-        contents = response.xpath("//div[@class='content']").get()
-        contents = remove_tags(content,keep=('p','a','blockquote','strong'))
-        contents = re.findall("<.+>[a-zA-Z]+<.+>",content)
-        contents = ' '.join(content)
-        contents = remove_tags(content)
+        # getting the contents
+        contents = response.xpath("//div[@class='content']").get()  # getting all the contents
+        contents = re.findall("<p.*>.+</p>",contents)  # getting all the useful contents between p tags
+        contents = ' '.join(contents)  # joining the resulting string list
+        contents = remove_tags(contents)  # removing the remaining tags
 
         date = response.xpath("//span[@class='date date-published']/text()").get()  # getting the publish date
         label = response.xpath("//h5[contains(@class,'rating-label')]/text()").get()  # getting the label
