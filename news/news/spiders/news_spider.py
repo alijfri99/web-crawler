@@ -1,5 +1,6 @@
 import scrapy
 from w3lib.html import remove_tags
+import re
 
 
 class NewsSpider(scrapy.Spider):
@@ -11,7 +12,14 @@ class NewsSpider(scrapy.Spider):
     def parse_post(self,response):
         title = response.xpath("//h1/text()").get()  # getting the title
         url = response.url  # getting the url
-        contents = remove_tags(response.xpath("//div[@class='content']").get())  # getting the contents
+
+        #getting the content
+        contents = response.xpath("//div[@class='content']").get()
+        contents = remove_tags(content,keep=('p','a','blockquote','strong'))
+        contents = re.findall("<.+>[a-zA-Z]+<.+>",content)
+        contents = ' '.join(content)
+        contents = remove_tags(content)
+
         date = response.xpath("//span[@class='date date-published']/text()").get()  # getting the publish date
         label = response.xpath("//h5[contains(@class,'rating-label')]/text()").get()  # getting the label
         author = response.xpath("//a[@class='author']/text()").get()  # getting the author
