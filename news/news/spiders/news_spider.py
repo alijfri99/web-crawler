@@ -18,7 +18,7 @@ class NewsSpider(scrapy.Spider):
         contents = ' '.join(contents)  # joining the resulting string list
         contents = remove_tags(contents)  # removing the remaining tags
 
-        date = response.xpath("//span[@class='date date-published']/text()").get()  # getting the publish date
+        date = response.xpath("//span[@class='date date-published']/text()").get()  # getting the publication date
         label = response.xpath("//h5[contains(@class,'rating-label')]/text()").get()  # getting the label
         author = response.xpath("//a[@class='author']/text()").get()  # getting the author
         claim = response.xpath("//div[@class='claim']/p/text()").get()  # getting the claim
